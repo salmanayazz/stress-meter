@@ -13,6 +13,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "stress-meter"
+rootProject.name = "StressMeter"
 include(":app")
  
