@@ -22,4 +22,9 @@
     <style name="Theme.StressMeter.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.StressMeter.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="Button.TextButton" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textStyle">bold</item>
+    </style>
+
 </resources>
