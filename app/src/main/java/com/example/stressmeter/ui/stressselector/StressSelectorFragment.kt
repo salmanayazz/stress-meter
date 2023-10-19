@@ -11,12 +11,12 @@ import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.stressmeter.R
-import com.example.stressmeter.databinding.FragmentHomeBinding
+import com.example.stressmeter.databinding.FragmentStressSelectorBinding
 import com.example.stressmeter.ui.ImageConfirmationActivity
 
 class StressSelectorFragment : Fragment() {
     private lateinit var rootView: View
-    private var _binding: FragmentHomeBinding? = null
+    private var _binding: FragmentStressSelectorBinding? = null
     private val stressSelectorViewModel by lazy { ViewModelProvider(this)[StressSelectorViewModel::class.java] }
 
     // This property is only valid between onCreateView and
@@ -28,7 +28,7 @@ class StressSelectorFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        _binding = FragmentStressSelectorBinding.inflate(inflater, container, false)
         val root: View = binding.root
         rootView = root
 
