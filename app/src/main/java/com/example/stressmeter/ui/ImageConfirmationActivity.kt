@@ -4,9 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
-import androidx.lifecycle.ViewModelProvider
 import com.example.stressmeter.R
-import com.example.stressmeter.ui.home.HomeViewModel
 
 class ImageConfirmationActivity : AppCompatActivity() {
     companion object {

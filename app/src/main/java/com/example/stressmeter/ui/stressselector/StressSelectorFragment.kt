@@ -1,16 +1,12 @@
-package com.example.stressmeter.ui.home
+package com.example.stressmeter.ui.stressselector
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.provider.DocumentsContract.Root
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.Button
 import android.widget.GridLayout
-import android.widget.GridView
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -18,10 +14,10 @@ import com.example.stressmeter.R
 import com.example.stressmeter.databinding.FragmentHomeBinding
 import com.example.stressmeter.ui.ImageConfirmationActivity
 
-class HomeFragment : Fragment() {
+class StressSelectorFragment : Fragment() {
     private lateinit var rootView: View
     private var _binding: FragmentHomeBinding? = null
-    private val homeViewModel by lazy { ViewModelProvider(this)[HomeViewModel::class.java] }
+    private val stressSelectorViewModel by lazy { ViewModelProvider(this)[StressSelectorViewModel::class.java] }
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -42,7 +38,7 @@ class HomeFragment : Fragment() {
             changeImagePage()
         }
 
-        homeViewModel.imagePage.observe(viewLifecycleOwner) {
+        stressSelectorViewModel.imagePage.observe(viewLifecycleOwner) {
             setupImageGrid()
         }
 
@@ -62,7 +58,7 @@ class HomeFragment : Fragment() {
         for (i in 0 until numRows) {
             for (j in 0 until numCols) {
                 val imageView = ImageView(rootView.context)
-                val imageResource = homeViewModel.images[homeViewModel.imagePage.value!!][i][j]
+                val imageResource = stressSelectorViewModel.images[stressSelectorViewModel.imagePage.value!!][i][j]
                 imageView.setImageResource(imageResource)
                 imageView.layoutParams = GridLayout.LayoutParams().apply {
                     width = 0
@@ -70,7 +66,7 @@ class HomeFragment : Fragment() {
                     rowSpec = GridLayout.spec(GridLayout.UNDEFINED, 1f)
                     columnSpec = GridLayout.spec(GridLayout.UNDEFINED, 1f)
                 }
-                imageView.id = homeViewModel.images[homeViewModel.imagePage.value!!][i][j]
+                imageView.id = stressSelectorViewModel.images[stressSelectorViewModel.imagePage.value!!][i][j]
                 imageView.setOnClickListener {
                     onImageClick(imageView.id)
                 }
@@ -96,8 +92,8 @@ class HomeFragment : Fragment() {
      */
     private fun changeImagePage() {
         // (val + 1) % 3
-        homeViewModel.imagePage.value =
-            (homeViewModel.imagePage.value!! + 1).rem(3)
+        stressSelectorViewModel.imagePage.value =
+            (stressSelectorViewModel.imagePage.value!! + 1).rem(3)
     }
 
     override fun onDestroyView() {

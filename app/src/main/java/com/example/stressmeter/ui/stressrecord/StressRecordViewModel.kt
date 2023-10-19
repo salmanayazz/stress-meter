@@ -1,10 +1,10 @@
-package com.example.stressmeter.ui.gallery
+package com.example.stressmeter.ui.stressrecord
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class GalleryViewModel : ViewModel() {
+class StressRecordViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
         value = "This is gallery Fragment"

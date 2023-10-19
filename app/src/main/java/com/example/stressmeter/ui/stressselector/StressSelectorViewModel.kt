@@ -1,11 +1,10 @@
-package com.example.stressmeter.ui.home
+package com.example.stressmeter.ui.stressselector
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.stressmeter.R
 
-class HomeViewModel : ViewModel() {
+class StressSelectorViewModel : ViewModel() {
     var imagePage = MutableLiveData<Int>(0) // to toggle between 3 pages of images
     val images = arrayOf(
         arrayOf(
