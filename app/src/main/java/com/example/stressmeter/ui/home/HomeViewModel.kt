@@ -25,5 +25,4 @@ class HomeViewModel : ViewModel() {
             intArrayOf(R.drawable.psm_to_do_list3, R.drawable.psm_wine3, R.drawable.psm_work4, R.drawable.psm_yoga4)
         )
     )
-    var selectedImageId = MutableLiveData<Int>(images[0][0][0])
 }

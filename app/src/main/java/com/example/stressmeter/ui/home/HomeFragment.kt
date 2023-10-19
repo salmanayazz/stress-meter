@@ -1,5 +1,6 @@
 package com.example.stressmeter.ui.home
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.provider.DocumentsContract.Root
@@ -54,7 +55,7 @@ class HomeFragment : Fragment() {
     private fun setupImageGrid() {
         val gridLayout: GridLayout = rootView.findViewById(R.id.gridLayout)
         gridLayout.removeAllViews()
-        // Create and configure 4x4 grid
+        // create and configure 4x4 grid
         val numRows = 4
         val numCols = 4
 
@@ -69,7 +70,7 @@ class HomeFragment : Fragment() {
                     rowSpec = GridLayout.spec(GridLayout.UNDEFINED, 1f)
                     columnSpec = GridLayout.spec(GridLayout.UNDEFINED, 1f)
                 }
-                imageView.id = View.generateViewId()
+                imageView.id = homeViewModel.images[homeViewModel.imagePage.value!!][i][j]
                 imageView.setOnClickListener {
                     onImageClick(imageView.id)
                 }
@@ -84,7 +85,9 @@ class HomeFragment : Fragment() {
      * @param imageId the id of the image that was clicked
      */
     private fun onImageClick(imageId: Int) {
-
+        val intent = Intent(requireContext(), ImageConfirmationActivity::class.java)
+        intent.putExtra(ImageConfirmationActivity.IMAGE_ID_KEY, imageId)
+        startActivity(intent)
     }
 
     /**
