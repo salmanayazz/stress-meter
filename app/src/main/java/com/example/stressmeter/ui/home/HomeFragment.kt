@@ -17,7 +17,7 @@ import com.example.stressmeter.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
     private lateinit var rootView: View
-    private var imagePage: Int = 0
+    private var imagePage: Int = 0 // to toggle between 3 pages of images
     private val images = arrayOf(
         arrayOf(
             intArrayOf(R.drawable.psm_alarm_clock, R.drawable.psm_alarm_clock2, R.drawable.psm_bar, R.drawable.psm_anxious),
@@ -63,6 +63,9 @@ class HomeFragment : Fragment() {
         return root
     }
 
+    /**
+     * Sets up the 4x4 grid of images based on the current imagePage
+     */
     private fun setupImageGrid() {
         val gridLayout: GridLayout = rootView.findViewById(R.id.gridLayout)
         gridLayout.removeAllViews()
@@ -91,13 +94,21 @@ class HomeFragment : Fragment() {
         }
     }
 
+    /**
+     * opens another activity for the image that was clicked
+     * @param viewId the id of the image that was clicked
+     */
     private fun onImageClick(viewId: Int) {
         println("clicked image:$viewId")
         when (viewId) {
-
+            // TODO:
         }
     }
 
+    /**
+     * Changes the imagePage to the next page
+     * 0 -> 1 -> 2 -> 0
+     */
     private fun changeImagePage() {
         imagePage++
         imagePage %= 3
