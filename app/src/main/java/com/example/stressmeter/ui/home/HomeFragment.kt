@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import android.widget.Button
 import android.widget.GridLayout
 import android.widget.GridView
 import android.widget.ImageView
@@ -15,8 +16,9 @@ import com.example.stressmeter.R
 import com.example.stressmeter.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
-
-    var images = arrayOf(
+    private lateinit var rootView: View
+    private var imagePage: Int = 0
+    private val images = arrayOf(
         arrayOf(
             intArrayOf(R.drawable.psm_alarm_clock, R.drawable.psm_alarm_clock2, R.drawable.psm_bar, R.drawable.psm_anxious),
             intArrayOf(R.drawable.psm_baby_sleeping, R.drawable.psm_bar, R.drawable.psm_barbed_wire2, R.drawable.psm_beach3),
@@ -50,27 +52,34 @@ class HomeFragment : Fragment() {
         val homeViewModel = ViewModelProvider(this)[HomeViewModel::class.java]
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
+        rootView = root
 
-        //setupGrid(root, 0)
+        setupImageGrid()
+
+        root.findViewById<Button>(R.id.more_images).setOnClickListener() {
+            changeImagePage()
+        }
 
         return root
     }
 
-    fun setupGrid(root: View, imagePage: Int) {
-        val gridLayout: GridLayout = root.findViewById(R.id.gridLayout)
-
+    private fun setupImageGrid() {
+        val gridLayout: GridLayout = rootView.findViewById(R.id.gridLayout)
+        gridLayout.removeAllViews()
         // Create and configure 4x4 grid
         val numRows = 4
         val numCols = 4
 
         for (i in 0 until numRows) {
             for (j in 0 until numCols) {
-                val imageView = ImageView(root.context)
+                val imageView = ImageView(rootView.context)
                 val imageResource = images[imagePage][i][j]
                 imageView.setImageResource(imageResource)
                 imageView.layoutParams = GridLayout.LayoutParams().apply {
                     width = 0
-                    height = GridLayout.LayoutParams.WRAP_CONTENT
+                    height = 0
+                    rowSpec = GridLayout.spec(GridLayout.UNDEFINED, 1f)
+                    columnSpec = GridLayout.spec(GridLayout.UNDEFINED, 1f)
                 }
                 imageView.id = View.generateViewId()
                 imageView.setOnClickListener {
@@ -83,9 +92,16 @@ class HomeFragment : Fragment() {
     }
 
     private fun onImageClick(viewId: Int) {
+        println("clicked image:$viewId")
         when (viewId) {
 
         }
+    }
+
+    private fun changeImagePage() {
+        imagePage++
+        imagePage %= 3
+        setupImageGrid()
     }
 
     override fun onDestroyView() {

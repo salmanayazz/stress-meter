@@ -13,93 +13,20 @@
         android:id="@+id/gridLayout"
         android:layout_width="400dp"
         android:layout_height="400dp"
-        android:columnCount="3"
+        android:columnCount="4"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:src="@drawable/psm_cat"
-            grid:layout_gravity="center" />
-
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:src="@drawable/psm_blue_drop"
-            grid:layout_gravity="center" />
-
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:src="@drawable/psm_baby_sleeping"
-            android:text="item 0x2"
-            grid:layout_gravity="center" />
-
-
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:src="@drawable/psm_alarm_clock"
-            android:text="item 1x0"
-            grid:layout_gravity="center" />
-
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:src="@drawable/psm_cat"
-            grid:layout_gravity="center" />
-
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:src="@drawable/psm_cat"
-            grid:layout_gravity="center" />
-
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:src="@drawable/psm_cat"
-            grid:layout_gravity="center" />
-
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:src="@drawable/psm_cat"
-            grid:layout_gravity="center" />
-
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:src="@drawable/psm_cat"
-            grid:layout_gravity="center" />
-
-
     </GridLayout>
 
     <Button
+        android:id="@+id/more_images"
+        style="@style/Button.TextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="More Images"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/gridLayout" />
