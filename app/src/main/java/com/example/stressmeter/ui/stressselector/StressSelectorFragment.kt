@@ -78,7 +78,8 @@ class StressSelectorFragment : Fragment() {
 
     /**
      * opens another activity for the image that was clicked
-     * @param imageId the id of the image that was clicked
+     * @param imageId 
+     * the id of the image that was clicked
      */
     private fun onImageClick(imageId: Int) {
         val intent = Intent(requireContext(), ImageConfirmationActivity::class.java)

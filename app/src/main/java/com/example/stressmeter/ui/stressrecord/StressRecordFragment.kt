@@ -1,9 +1,11 @@
 package com.example.stressmeter.ui.stressrecord
 
+import android.Manifest
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.stressmeter.R
@@ -35,16 +37,26 @@ class StressRecordFragment : Fragment() {
         val root: View = binding.root
 
         val chart = root.findViewById<LineChart>(R.id.chart1)
+        stressRecordViewModel.loadRecords(root.context)
+        ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 1)
+        stressRecordViewModel.stressRecordData.observe(viewLifecycleOwner) { arr ->
+            val values = ArrayList<Entry>()
 
+            arr.forEachIndexed { index, e ->
+                values.add(Entry(index.toFloat(), e.toFloat()))
+            }
+            val set1 = LineDataSet(values, "DataSet 1")
+            val dataSets = ArrayList<ILineDataSet>()
+            dataSets.add(set1)
+            val lineData = LineData(dataSets)
+            chart.data = lineData
+        }
 
-        val values = ArrayList<Entry>()
-        values.add(Entry(2F, 3F))
-        values.add(Entry(4F, 10F))
-        val set1 = LineDataSet(values, "DataSet 1")
-        val dataSets = ArrayList<ILineDataSet>()
-        dataSets.add(set1)
-        val lineData = LineData(dataSets)
-        chart.data = lineData
+        stressRecordViewModel.addRecord(root.context, 5)
+        stressRecordViewModel.addRecord(root.context,6)
+        stressRecordViewModel.addRecord(root.context,2)
+        stressRecordViewModel.addRecord(root.context,7)
+
         return root
     }
 
