@@ -20,8 +20,10 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
-
-
+import com.github.mikephil.charting.components.AxisBase
+import com.github.mikephil.charting.components.Description
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 
 class StressRecordFragment : Fragment() {
     private lateinit var rootView: View
@@ -57,7 +59,6 @@ class StressRecordFragment : Fragment() {
      */
     private fun populateChart() {
         val chart = rootView.findViewById<LineChart>(R.id.stress_chart)
-        ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 1)
         stressRecordViewModel.stressRecords.observe(viewLifecycleOwner) { arr ->
             val values = ArrayList<Entry>()
 
@@ -69,6 +70,11 @@ class StressRecordFragment : Fragment() {
             dataSets.add(set1)
             val lineData = LineData(dataSets)
             chart.data = lineData
+
+            // chart styling
+            chart.legend.isEnabled = false
+            chart.data.notifyDataChanged()
+            chart.invalidate()
         }
     }
 
@@ -79,7 +85,6 @@ class StressRecordFragment : Fragment() {
         val tableLayout = rootView.findViewById<TableLayout>(R.id.stress_table)
 
         stressRecordViewModel.stressRecords.observe(viewLifecycleOwner) { arr ->
-            println("arr $arr")
             arr.forEach {
                 // create TextViews and add them to the row
                 val tableRow = TableRow(context)
@@ -115,7 +120,6 @@ class StressRecordFragment : Fragment() {
 
                 tableRow.addView(timeTextView)
                 tableRow.addView(stressLevelTextView)
-
 
                 // set right under the header
                 tableLayout.addView(tableRow, 1)
