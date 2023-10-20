@@ -17,6 +17,7 @@ import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 
 
+
 class StressRecordFragment : Fragment() {
 
     private var _binding: FragmentStressRecordBinding? = null
@@ -39,11 +40,11 @@ class StressRecordFragment : Fragment() {
         val chart = root.findViewById<LineChart>(R.id.chart1)
         stressRecordViewModel.loadRecords(root.context)
         ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 1)
-        stressRecordViewModel.stressRecordData.observe(viewLifecycleOwner) { arr ->
+        stressRecordViewModel.stressRecords.observe(viewLifecycleOwner) { arr ->
             val values = ArrayList<Entry>()
 
             arr.forEachIndexed { index, e ->
-                values.add(Entry(index.toFloat(), e.toFloat()))
+                values.add(Entry(index.toFloat(), e.stressValue.toFloat()))
             }
             val set1 = LineDataSet(values, "DataSet 1")
             val dataSets = ArrayList<ILineDataSet>()

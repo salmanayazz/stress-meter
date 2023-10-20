@@ -9,70 +9,77 @@ import java.io.File
 import java.io.FileReader
 import java.io.FileWriter
 import java.io.IOException
+import java.util.Calendar
+import java.util.Date
 
+data class StressRecord(val stressValue: Int, val time: String)
 
 class StressRecordViewModel : ViewModel() {
     private val fileName = "stress_timestamp.csv"
-    val stressRecordData: MutableLiveData<ArrayList<Int>> = MutableLiveData(ArrayList())
+    val stressRecords: MutableLiveData<ArrayList<StressRecord>> = MutableLiveData(ArrayList())
 
     /**
-     * Add a new record to the stressRecordData var and save it to the file
-     * @param context 
-     * the context of the activity
-     * @param value 
-     * the value to be added to the stressRecordData var
+     * Adds a new record to the file
+     * @param context
+     * The context to save the file to
+     * @param stressValue
+     * The stress value to save (1 - 10)
      */
-    fun addRecord(context: Context, value: Int) {
-        val bw: BufferedWriter? = null
+    fun addRecord(context: Context, stressValue: Int) {
         try {
-            val file = File(context.getExternalFilesDir(null), fileName)
-            if (!file.exists()) {
-                file.createNewFile()
-            } else { // load its contents if it exists
-                loadRecords(context)
-            }
-            stressRecordData.value?.add(value)
+            val currentTime = Calendar.getInstance().time
+            val newRecord = StressRecord(stressValue, currentTime.toString())
 
-            val fw = FileWriter(file.absoluteFile)
+            loadRecords(context)
+            stressRecords.value?.add(newRecord)
+
+            // re-save all records to file
+            val file = File(context.getExternalFilesDir(null), fileName)
+            val fw = FileWriter(file)
             val bw = BufferedWriter(fw)
-            // turn the int array onto a string separated by ","
-            bw.write(stressRecordData.value?.joinToString(",") ?: "")
+
+            stressRecords.value?.forEach { record ->
+                bw.write("${record.stressValue},${record.time}\n")
+            }
+
             bw.close()
-            println("done ${stressRecordData.value}")
         } catch (e: IOException) {
             e.printStackTrace()
-        } finally {
-            try {
-                bw?.close()
-            } catch (ex: IOException) {
-                ex.printStackTrace()
-            }
         }
     }
 
+    /**
+     * Loads the records from the file and updates the LiveData
+     * @param context 
+     * The context to load the file from
+     */
     fun loadRecords(context: Context) {
-        var br: BufferedReader? = null
         try {
             val file = File(context.getExternalFilesDir(null), fileName)
-            if (!file.exists()) { return }
+            if (file.exists()) {
+                val stressRecordList = mutableListOf<StressRecord>()
 
-            // save file values to stressRecordsData var
-            br = BufferedReader(FileReader(file))
-            br.readLine().also { str ->
-                var strValues = str.split(",")
-                strValues.forEach { num ->
-                    stressRecordData.value?.add(num.toInt())
+                val br = BufferedReader(FileReader(file))
+                br.useLines { lines ->
+                    lines.forEach { line ->
+                        val split = line.split(",")
+                        if (split.size == 2) {
+                            stressRecordList.add(
+                                StressRecord(
+                                    split[0].toInt(),
+                                    split[1]
+                                )
+                            )
+                        }
+                    }
                 }
+
+                // Update LiveData with the loaded records
+                stressRecords.value = ArrayList(stressRecordList)
+                println("done: ${stressRecords.value}")
             }
-            println("done loading: ${stressRecordData.value}")
         } catch (e: IOException) {
             e.printStackTrace()
-        } finally {
-            try {
-                br?.close()
-            } catch (ex: IOException) {
-                ex.printStackTrace()
-            }
         }
     }
 }
