@@ -1,7 +1,11 @@
 package com.example.stressmeter.ui.stressselector
 
+import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,11 +17,18 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.stressmeter.R
 import com.example.stressmeter.databinding.FragmentStressSelectorBinding
 import com.example.stressmeter.ui.ImageConfirmationActivity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.util.concurrent.TimeUnit
 
 class StressSelectorFragment : Fragment() {
     private lateinit var rootView: View
     private var _binding: FragmentStressSelectorBinding? = null
     private val stressSelectorViewModel by lazy { ViewModelProvider(this)[StressSelectorViewModel::class.java] }
+    private var isVibrating: Boolean = false
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -41,6 +52,8 @@ class StressSelectorFragment : Fragment() {
         stressSelectorViewModel.imagePage.observe(viewLifecycleOwner) {
             setupImageGrid()
         }
+
+        startVibration()
 
         return root
     }
@@ -99,8 +112,56 @@ class StressSelectorFragment : Fragment() {
             (stressSelectorViewModel.imagePage.value!! + 1).rem(3)
     }
 
+    /**
+     * Vibrates the phone
+     */
+    private fun startVibration() {
+        isVibrating = true
+        CoroutineScope(Dispatchers.IO).launch {
+            val vibrator = context?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+            while (isVibrating) {
+                if (Build.VERSION.SDK_INT >= 26) {
+                    vibrator.vibrate(
+                        VibrationEffect.createWaveform(
+                            longArrayOf(200, 200),
+                            0
+                        )
+                    )
+                } else {
+                    vibrator.vibrate(
+                        longArrayOf(200, 200),
+                        0
+                    )
+                }
+                delay(800)
+            }
+        }
+    }
+
+    private fun stopVibration() {
+        isVibrating = false
+        val vibrator = context?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+        vibrator.cancel()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        stopVibration()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        stopVibration()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        startVibration()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
+        isVibrating = false
         _binding = null
     }
 }

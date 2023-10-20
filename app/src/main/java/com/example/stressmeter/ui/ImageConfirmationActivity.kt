@@ -39,7 +39,7 @@ class ImageConfirmationActivity : AppCompatActivity() {
     */
     private fun setupListeners() {
         findViewById<Button>(R.id.cancel_image).setOnClickListener() {
-            this.finishAffinity();
+            finish()
         }
         findViewById<Button>(R.id.submit_image).setOnClickListener() {
             stressRecordViewModel.addRecord(this, imageStressLvl)
