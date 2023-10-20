@@ -52,11 +52,6 @@ class StressRecordFragment : Fragment() {
             chart.data = lineData
         }
 
-        stressRecordViewModel.addRecord(root.context, 5)
-        stressRecordViewModel.addRecord(root.context,6)
-        stressRecordViewModel.addRecord(root.context,2)
-        stressRecordViewModel.addRecord(root.context,7)
-
         return root
     }
 

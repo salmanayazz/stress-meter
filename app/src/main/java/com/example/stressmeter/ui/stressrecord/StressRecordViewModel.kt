@@ -29,6 +29,8 @@ class StressRecordViewModel : ViewModel() {
             val file = File(context.getExternalFilesDir(null), fileName)
             if (!file.exists()) {
                 file.createNewFile()
+            } else { // load its contents if it exists
+                loadRecords(context)
             }
 
             val fw = FileWriter(file.absoluteFile)
@@ -36,6 +38,7 @@ class StressRecordViewModel : ViewModel() {
             // turn the int array onto a string separated by ","
             bw.write(stressRecordData.value?.joinToString(",") ?: "")
             bw.close()
+            println("done ${stressRecordData.value}")
         } catch (e: IOException) {
             e.printStackTrace()
         } finally {
@@ -61,6 +64,7 @@ class StressRecordViewModel : ViewModel() {
                     stressRecordData.value?.add(num.toInt())
                 }
             }
+            println("done loading: ${stressRecordData.value}")
         } catch (e: IOException) {
             e.printStackTrace()
         } finally {

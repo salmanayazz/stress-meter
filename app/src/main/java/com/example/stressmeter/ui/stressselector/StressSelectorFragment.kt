@@ -58,7 +58,7 @@ class StressSelectorFragment : Fragment() {
         for (i in 0 until numRows) {
             for (j in 0 until numCols) {
                 val imageView = ImageView(rootView.context)
-                val imageResource = stressSelectorViewModel.images[stressSelectorViewModel.imagePage.value!!][i][j]
+                val imageResource = stressSelectorViewModel.images[stressSelectorViewModel.imagePage.value!!][i][j][0]
                 imageView.setImageResource(imageResource)
                 imageView.layoutParams = GridLayout.LayoutParams().apply {
                     width = 0
@@ -66,9 +66,9 @@ class StressSelectorFragment : Fragment() {
                     rowSpec = GridLayout.spec(GridLayout.UNDEFINED, 1f)
                     columnSpec = GridLayout.spec(GridLayout.UNDEFINED, 1f)
                 }
-                imageView.id = stressSelectorViewModel.images[stressSelectorViewModel.imagePage.value!!][i][j]
+                imageView.id = stressSelectorViewModel.images[stressSelectorViewModel.imagePage.value!!][i][j][0]
                 imageView.setOnClickListener {
-                    onImageClick(imageView.id)
+                    onImageClick(stressSelectorViewModel.images[stressSelectorViewModel.imagePage.value!!][i][j])
                 }
 
                 gridLayout.addView(imageView)
@@ -81,9 +81,11 @@ class StressSelectorFragment : Fragment() {
      * @param imageId 
      * the id of the image that was clicked
      */
-    private fun onImageClick(imageId: Int) {
+    private fun onImageClick(imageVals: IntArray) {
         val intent = Intent(requireContext(), ImageConfirmationActivity::class.java)
-        intent.putExtra(ImageConfirmationActivity.IMAGE_ID_KEY, imageId)
+        intent.putExtra(ImageConfirmationActivity.IMAGE_ID_KEY, imageVals[0])
+        intent.putExtra(ImageConfirmationActivity.IMAGE_STRESS_KEY, imageVals[1])
+
         startActivity(intent)
     }
 
