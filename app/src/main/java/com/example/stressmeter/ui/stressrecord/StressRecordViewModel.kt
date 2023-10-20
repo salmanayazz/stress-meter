@@ -25,13 +25,13 @@ class StressRecordViewModel : ViewModel() {
     fun addRecord(context: Context, value: Int) {
         val bw: BufferedWriter? = null
         try {
-            stressRecordData.value?.add(value)
             val file = File(context.getExternalFilesDir(null), fileName)
             if (!file.exists()) {
                 file.createNewFile()
             } else { // load its contents if it exists
                 loadRecords(context)
             }
+            stressRecordData.value?.add(value)
 
             val fw = FileWriter(file.absoluteFile)
             val bw = BufferedWriter(fw)
