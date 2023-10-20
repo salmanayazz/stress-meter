@@ -12,7 +12,7 @@ import java.io.IOException
 import java.util.Calendar
 import java.util.Date
 
-data class StressRecord(val stressValue: Int, val time: String)
+data class StressRecord(val stressLevel: Int, val time: String)
 
 class StressRecordViewModel : ViewModel() {
     private val fileName = "stress_timestamp.csv"
@@ -22,13 +22,13 @@ class StressRecordViewModel : ViewModel() {
      * Adds a new record to the file
      * @param context
      * The context to save the file to
-     * @param stressValue
+     * @param stressLevel
      * The stress value to save (1 - 10)
      */
-    fun addRecord(context: Context, stressValue: Int) {
+    fun addRecord(context: Context, stressLevel: Int) {
         try {
             val currentTime = Calendar.getInstance().time
-            val newRecord = StressRecord(stressValue, currentTime.toString())
+            val newRecord = StressRecord(stressLevel, currentTime.toString())
 
             loadRecords(context)
             stressRecords.value?.add(newRecord)
@@ -39,7 +39,7 @@ class StressRecordViewModel : ViewModel() {
             val bw = BufferedWriter(fw)
 
             stressRecords.value?.forEach { record ->
-                bw.write("${record.stressValue},${record.time}\n")
+                bw.write("${record.stressLevel},${record.time}\n")
             }
 
             bw.close()
