@@ -1,12 +1,11 @@
 name: Publish Debug APK
 
 on:
-  push:
-    branches:
-      - main
+  push: {}
+  pull_request: {}
 
 jobs:
-  publish_debug_apk:
+  build:
     runs-on: ubuntu-latest
 
     steps:
