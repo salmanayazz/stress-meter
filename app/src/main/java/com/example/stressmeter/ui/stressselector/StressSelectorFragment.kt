@@ -2,6 +2,7 @@ package com.example.stressmeter.ui.stressselector
 
 import android.content.Context
 import android.content.Intent
+import android.media.MediaPlayer
 import android.os.Build
 import android.os.Bundle
 import android.os.VibrationEffect
@@ -21,14 +22,14 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.util.concurrent.TimeUnit
+
 
 class StressSelectorFragment : Fragment() {
     private lateinit var rootView: View
     private var _binding: FragmentStressSelectorBinding? = null
     private val stressSelectorViewModel by lazy { ViewModelProvider(this)[StressSelectorViewModel::class.java] }
     private var isVibrating: Boolean = false
+    private var mediaPlayer: MediaPlayer? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -54,6 +55,7 @@ class StressSelectorFragment : Fragment() {
         }
 
         startVibration()
+        startSound()
 
         return root
     }
@@ -99,6 +101,8 @@ class StressSelectorFragment : Fragment() {
         intent.putExtra(ImageConfirmationActivity.IMAGE_ID_KEY, imageVals[0])
         intent.putExtra(ImageConfirmationActivity.IMAGE_STRESS_KEY, imageVals[1])
 
+        stopVibration()
+        stopSound()
         startActivity(intent)
     }
 
@@ -138,30 +142,42 @@ class StressSelectorFragment : Fragment() {
         }
     }
 
+    /**
+     * stops the vibration
+     */
     private fun stopVibration() {
         isVibrating = false
         val vibrator = context?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
         vibrator.cancel()
     }
 
-    override fun onPause() {
-        super.onPause()
-        stopVibration()
+    /**
+     * starts playing a alarm sound
+     */
+    private fun startSound() {
+        if (mediaPlayer == null) {
+            mediaPlayer = MediaPlayer.create(context, R.raw.clock_sound_effect)
+        }
+
+        if (!mediaPlayer?.isPlaying!!) {
+            mediaPlayer?.isLooping = true
+            mediaPlayer?.start()
+        }
     }
 
-    override fun onStop() {
-        super.onStop()
-        stopVibration()
+    private fun stopSound() {
+        if (mediaPlayer != null && mediaPlayer!!.isPlaying) {
+            mediaPlayer!!.stop();
+            mediaPlayer!!.release();
+            mediaPlayer = null;
+        }
     }
 
-    override fun onResume() {
-        super.onResume()
-        startVibration()
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        isVibrating = false
+        stopVibration()
+        stopSound()
         _binding = null
     }
 }
