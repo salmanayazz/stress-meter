@@ -14,6 +14,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "StressMeter"
+rootProject.name = "salman_ayaz_stressmeter"
 include(":app")
  

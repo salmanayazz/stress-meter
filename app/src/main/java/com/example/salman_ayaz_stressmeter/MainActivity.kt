@@ -1,4 +1,4 @@
-package com.example.stressmeter
+package com.example.salman_ayaz_stressmeter
 
 import android.os.Bundle
 import android.view.Menu
@@ -11,7 +11,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
-import com.example.stressmeter.databinding.ActivityMainBinding
+import com.example.salman_ayaz_stressmeter.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 

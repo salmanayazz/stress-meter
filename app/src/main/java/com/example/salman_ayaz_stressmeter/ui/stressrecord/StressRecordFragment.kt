@@ -1,7 +1,6 @@
-package com.example.stressmeter.ui.stressrecord
+package com.example.salman_ayaz_stressmeter.ui.stressrecord
 
 import android.Manifest
-import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
 import android.view.Gravity
@@ -14,18 +13,13 @@ import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.stressmeter.R
-import com.example.stressmeter.databinding.FragmentStressRecordBinding
+import com.example.salman_ayaz_stressmeter.R
+import com.example.salman_ayaz_stressmeter.databinding.FragmentStressRecordBinding
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
-import com.github.mikephil.charting.components.AxisBase
-import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
-import com.github.mikephil.charting.formatter.ValueFormatter
 
 class StressRecordFragment : Fragment() {
     private lateinit var rootView: View

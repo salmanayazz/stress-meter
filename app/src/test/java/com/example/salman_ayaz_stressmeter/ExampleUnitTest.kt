@@ -1,4 +1,4 @@
-package com.example.stressmeter
+package com.example.salman_ayaz_stressmeter
 
 import org.junit.Test
 

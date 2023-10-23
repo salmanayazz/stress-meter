@@ -1,4 +1,4 @@
-package com.example.stressmeter.ui.stressrecord
+package com.example.salman_ayaz_stressmeter.ui.stressrecord
 
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
@@ -10,7 +10,6 @@ import java.io.FileReader
 import java.io.FileWriter
 import java.io.IOException
 import java.util.Calendar
-import java.util.Date
 
 data class StressRecord(val stressLevel: Int, val time: String)
 

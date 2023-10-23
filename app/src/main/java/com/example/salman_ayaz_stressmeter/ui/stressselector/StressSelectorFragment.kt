@@ -1,4 +1,4 @@
-package com.example.stressmeter.ui.stressselector
+package com.example.salman_ayaz_stressmeter.ui.stressselector
 
 import android.content.Context
 import android.content.Intent
@@ -15,9 +15,9 @@ import android.widget.GridLayout
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.stressmeter.R
-import com.example.stressmeter.databinding.FragmentStressSelectorBinding
-import com.example.stressmeter.ui.ImageConfirmationActivity
+import com.example.salman_ayaz_stressmeter.R
+import com.example.salman_ayaz_stressmeter.databinding.FragmentStressSelectorBinding
+import com.example.salman_ayaz_stressmeter.ui.ImageConfirmationActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay

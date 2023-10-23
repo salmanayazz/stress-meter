@@ -1,4 +1,4 @@
-package com.example.stressmeter.ui
+package com.example.salman_ayaz_stressmeter.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -6,8 +6,8 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
-import com.example.stressmeter.R
-import com.example.stressmeter.ui.stressrecord.StressRecordViewModel
+import com.example.salman_ayaz_stressmeter.R
+import com.example.salman_ayaz_stressmeter.ui.stressrecord.StressRecordViewModel
 
 class ImageConfirmationActivity : AppCompatActivity() {
     companion object {

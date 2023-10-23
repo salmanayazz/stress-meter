@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.stressmeter"
+    namespace = "com.example.salman_ayaz_stressmeter"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.stressmeter"
+        applicationId = "com.example.salman_ayaz_stressmeter"
         minSdk = 24
         targetSdk = 33
         versionCode = 1
