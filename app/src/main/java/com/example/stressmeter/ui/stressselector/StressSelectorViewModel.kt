@@ -88,4 +88,7 @@ class StressSelectorViewModel : ViewModel() {
             )
         )
     )
+
+    var vibrate = MutableLiveData<Boolean>(true);
+    var playSound = MutableLiveData<Boolean>(true);
 }

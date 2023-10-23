@@ -54,8 +54,7 @@ class StressSelectorFragment : Fragment() {
             setupImageGrid()
         }
 
-        startVibration()
-        startSound()
+        soundAndVibrateObservers()
 
         return root
     }
@@ -101,8 +100,8 @@ class StressSelectorFragment : Fragment() {
         intent.putExtra(ImageConfirmationActivity.IMAGE_ID_KEY, imageVals[0])
         intent.putExtra(ImageConfirmationActivity.IMAGE_STRESS_KEY, imageVals[1])
 
-        stopVibration()
-        stopSound()
+        stressSelectorViewModel.vibrate.value = false
+        stressSelectorViewModel.playSound.value = false
         startActivity(intent)
     }
 
@@ -173,11 +172,38 @@ class StressSelectorFragment : Fragment() {
         }
     }
 
+    /**
+     * Observes the vibrate and playSound variables in the stressSelectorViewModel
+     * and starts/stops the vibration and sound accordingly
+     * This is done so that the vibration and sound can be stopped when the user
+     * navigates away from the fragment but not when the application is closed
+     * and stops the vibration and sound from playing again when the user navigates
+     * back to the fragment
+     */
+    private fun soundAndVibrateObservers() {
+        stressSelectorViewModel.vibrate.observe(viewLifecycleOwner) {
+            if (it == true) {
+                startVibration()
+            } else {
+                stopVibration()
+            }
+        }
+        stressSelectorViewModel.playSound.observe(viewLifecycleOwner) {
+            if (it == true) {
+                startSound()
+            } else {
+                stopSound()
+            }
+        }
+    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
-        stopVibration()
+        stressSelectorViewModel.vibrate.value = false
+        stressSelectorViewModel.playSound.value = false
         stopSound()
+        stopVibration()
         _binding = null
     }
 }
