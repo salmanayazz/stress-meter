@@ -1,6 +1,7 @@
 package com.example.stressmeter.ui.stressrecord
 
 import android.Manifest
+import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
 import android.view.Gravity
@@ -24,6 +25,7 @@ import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
+import com.github.mikephil.charting.formatter.ValueFormatter
 
 class StressRecordFragment : Fragment() {
     private lateinit var rootView: View
@@ -59,24 +61,35 @@ class StressRecordFragment : Fragment() {
      */
     private fun populateChart() {
         val chart = rootView.findViewById<LineChart>(R.id.stress_chart)
-        stressRecordViewModel.stressRecords.observe(viewLifecycleOwner) { arr ->
+        val stressRecords = stressRecordViewModel.stressRecords
+
+        stressRecords.observe(viewLifecycleOwner) { arr ->
             val values = ArrayList<Entry>()
 
             arr.forEachIndexed { index, e ->
                 values.add(Entry(index.toFloat(), e.stressLevel.toFloat()))
             }
-            val set1 = LineDataSet(values, "DataSet 1")
-            val dataSets = ArrayList<ILineDataSet>()
-            dataSets.add(set1)
-            val lineData = LineData(dataSets)
+
+            val dataSet = LineDataSet(values, "Stress Level")
+            val lineData = LineData(dataSet)
             chart.data = lineData
 
-            // chart styling
-            chart.legend.isEnabled = false
-            chart.data.notifyDataChanged()
+            // customize chart appearance
+            chart.description.isEnabled = false
+            chart.setDrawGridBackground(false)
+
+            // customize the X-axis
+            chart.xAxis.position = XAxis.XAxisPosition.BOTTOM
+            chart.xAxis.setDrawGridLines(false)
+
+            // customize the Y-axis
+            chart.axisLeft.setDrawGridLines(false)
+            chart.axisRight.isEnabled = false
+
             chart.invalidate()
         }
     }
+
 
     /**
      * Populates the table with the stress records
